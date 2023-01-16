@@ -91,7 +91,7 @@ function App() {
       {showModal && (
         <Modal
           onDelete={() => handleDeleteReply(selectedReplyId)}
-          onCancel={handleCancelDelete}
+          onCancel={() => handleCancelDelete()}
         />
       )}
     </div>
