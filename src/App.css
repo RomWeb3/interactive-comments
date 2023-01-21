@@ -41,7 +41,7 @@ body {
 }
 
 .App {
-  padding: 3.2rem 1.6rem;
+  padding: 1.6rem 1.6rem 3.2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

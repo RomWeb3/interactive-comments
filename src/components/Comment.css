@@ -3,13 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.6rem;
+  margin-top: 1.6rem;
+  width: 100%;
 }
 
 .comment {
   background: white;
   padding: 1.6rem;
   border-radius: 8px;
+  width: 100%;
 }
 
 .comment-header {

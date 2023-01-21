@@ -2,12 +2,13 @@
   background: white;
   padding: 1.6rem;
   border-radius: 8px;
+  width: 100%;
+  margin-top: 1.6rem;
 }
 
 .comment-header {
   display: flex;
   align-items: center;
-  gap: 1.6rem;
 }
 
 .comment-header img {
@@ -64,11 +65,31 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.6rem;
 }
 
 .replying-to {
   color: #5357b6;
   font-weight: 700;
-  margin-right: 0.5rem;
+}
+
+textarea {
+  height: 15rem;
+}
+
+.edit-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
+
+.update-btn {
+  background: #5357b6;
+  border-radius: 8px;
+  width: 10.4rem;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+  padding: 1.2rem 0;
 }

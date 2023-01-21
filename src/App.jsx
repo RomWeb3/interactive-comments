@@ -27,7 +27,8 @@ function App() {
     ).score;
     if (
       (currentScore > initialScore && value === 1) ||
-      (currentScore < initialScore && value === -1)
+      (currentScore < initialScore && value === -1) ||
+      (currentScore === 0 && value === -1)
     )
       return;
     setScores((prevScore) =>
@@ -35,6 +36,15 @@ function App() {
         scoreObj.id === id ? { id, score: currentScore + value } : scoreObj
       )
     );
+  };
+
+  const handleShowModal = (id) => {
+    setSelectedReplyId(id);
+    setShowModal(true);
+  };
+
+  const handleHideModal = () => {
+    setShowModal(false);
   };
 
   const handleDeleteReply = (selectedReplyId) => {
@@ -52,13 +62,46 @@ function App() {
     setShowModal(false);
   };
 
-  const handleConfirmDelete = (id) => {
-    setSelectedReplyId(id);
-    return setShowModal(true);
+  const handleEditReply = (e) => {
+    setDatas((prevData) => ({
+      ...prevData,
+      comments: prevData.comments.map((comment) => {
+        return {
+          ...comment,
+          replies: comment.replies.map((reply) => {
+            return reply.id === selectedReplyId
+              ? { ...reply, content: e.target.value }
+              : reply;
+          }),
+        };
+      }),
+    }));
   };
 
-  const handleCancelDelete = () => {
-    setShowModal(false);
+  const editComment = (content, id) => {
+    setDatas((prevData) => ({
+      ...prevData,
+      comments: prevData.comments.map((comment) => {
+        return {
+          ...comment,
+          replies: comment.replies.map((reply) => {
+            return reply.id === id ? { ...reply, content: content } : reply;
+          }),
+        };
+      }),
+    }));
+  };
+
+  const handleNewComment = (newComment) => {
+    setScores([...scores, { id: newComment.id, score: newComment.score }]);
+    setInitialScores([
+      ...scores,
+      { id: newComment.id, score: newComment.score },
+    ]);
+    setDatas((prevData) => ({
+      ...prevData,
+      comments: [...prevData.comments, newComment],
+    }));
   };
 
   return (
@@ -81,17 +124,22 @@ function App() {
                 onPlusScore={() => handleScoreChange(reply.id, 1)}
                 onMinusScore={() => handleScoreChange(reply.id, -1)}
                 currentUser={data.currentUser}
-                onModal={() => handleConfirmDelete(reply.id)}
+                onModal={() => handleShowModal(reply.id)}
+                onEdit={() => handleEditReply()}
+                editComment={editComment}
               />
             ))}
           </div>
         </Comment>
       ))}
-      <AddComment />
+      <AddComment
+        addNewComment={handleNewComment}
+        currentUser={data.currentUser}
+      />
       {showModal && (
         <Modal
+          onCancel={() => handleHideModal()}
           onDelete={() => handleDeleteReply(selectedReplyId)}
-          onCancel={() => handleCancelDelete()}
         />
       )}
     </div>

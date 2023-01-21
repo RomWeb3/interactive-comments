@@ -1,6 +1,6 @@
 import "./Modal.css";
 
-function Modal(onCancel, onDelete) {
+function Modal({ onCancel, onDelete }) {
   return (
     <div className="modal">
       <div className="modal-container">
