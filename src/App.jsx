@@ -48,48 +48,49 @@ function App() {
   };
 
   const handleDeleteReply = (selectedReplyId) => {
-    setDatas((prevData) => ({
-      ...prevData,
-      comments: prevData.comments.map((comment) => {
-        return {
-          ...comment,
-          replies: comment.replies.filter(
-            (reply) => reply.id !== selectedReplyId
-          ),
-        };
-      }),
-    }));
+    setDatas((prevData) => {
+      return {
+        ...prevData,
+        comments: prevData.comments
+          .map((comment) => {
+            if (comment.id === selectedReplyId) {
+              return null;
+            }
+            return {
+              ...comment,
+              replies: comment.replies.filter(
+                (reply) => reply.id !== selectedReplyId
+              ),
+            };
+          })
+          .filter((comment) => comment !== null),
+      };
+    });
     setShowModal(false);
   };
 
-  const handleEditReply = (e) => {
-    setDatas((prevData) => ({
-      ...prevData,
-      comments: prevData.comments.map((comment) => {
-        return {
-          ...comment,
-          replies: comment.replies.map((reply) => {
-            return reply.id === selectedReplyId
-              ? { ...reply, content: e.target.value }
-              : reply;
-          }),
-        };
-      }),
-    }));
-  };
-
   const editComment = (content, id) => {
-    setDatas((prevData) => ({
-      ...prevData,
-      comments: prevData.comments.map((comment) => {
-        return {
-          ...comment,
-          replies: comment.replies.map((reply) => {
-            return reply.id === id ? { ...reply, content: content } : reply;
-          }),
-        };
-      }),
-    }));
+    setDatas((prevData) => {
+      const updatedComments = prevData.comments.map((comment) => {
+        if (comment.id === id) {
+          return {
+            ...comment,
+            content,
+          };
+        }
+        const updatedReplies = comment.replies.map((reply) => {
+          if (reply.id === id) {
+            return {
+              ...reply,
+              content,
+            };
+          }
+          return reply;
+        });
+        return { ...comment, replies: updatedReplies };
+      });
+      return { ...prevData, comments: updatedComments };
+    });
   };
 
   const handleNewComment = (newComment) => {
@@ -104,6 +105,23 @@ function App() {
     }));
   };
 
+  const handleNewReply = (newReply, parentId) => {
+    setScores([...scores, { id: newReply.id, score: newReply.score }]);
+    setInitialScores([...scores, { id: newReply.id, score: newReply.score }]);
+    setDatas((prevData) => {
+      const updatedComments = prevData.comments.map((comment) => {
+        if (comment.id === parentId) {
+          return {
+            ...comment,
+            replies: [...comment.replies, newReply],
+          };
+        }
+        return comment;
+      });
+      return { ...prevData, comments: updatedComments };
+    });
+  };
+
   return (
     <div className="App">
       {datas.comments.map((comment) => (
@@ -114,6 +132,9 @@ function App() {
           onPlusScore={() => handleScoreChange(comment.id, 1)}
           onMinusScore={() => handleScoreChange(comment.id, -1)}
           currentUser={data.currentUser}
+          onModal={() => handleShowModal(comment.id)}
+          editComment={editComment}
+          addNewReply={handleNewReply}
         >
           <div className="replies">
             {comment.replies.map((reply) => (
@@ -125,7 +146,6 @@ function App() {
                 onMinusScore={() => handleScoreChange(reply.id, -1)}
                 currentUser={data.currentUser}
                 onModal={() => handleShowModal(reply.id)}
-                onEdit={() => handleEditReply()}
                 editComment={editComment}
               />
             ))}

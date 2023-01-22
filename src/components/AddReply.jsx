@@ -1,26 +1,32 @@
 import { useState } from "react";
-import "./AddComment.css";
 
-function AddComment({ addNewComment, currentUser }) {
-  const [comment, setComment] = useState("");
+function AddReply({
+  addNewReply,
+  currentUser,
+  parentId,
+  showReply,
+  setShowReply,
+}) {
+  const [reply, setReply] = useState("@username,");
 
   const onSubmit = () => {
     const currentDate = new Date();
     const timeAgo = new Intl.RelativeTimeFormat("en", { style: "narrow" });
     const time = -Math.round((currentDate - new Date()) / 1000 / 60 / 60 / 24);
-    const newComment = {
+    const newReply = {
       id: Date.now(),
-      content: comment,
+      content: reply,
       createdAt: timeAgo.format(time, "days"),
       score: 0,
+      replyingTo: currentUser.username,
       user: {
         image: currentUser.image,
         username: currentUser.username,
       },
-      replies: [],
     };
-    addNewComment(newComment);
-    setComment("");
+    setReply("@username,");
+    addNewReply(newReply, parentId);
+    setShowReply(!showReply);
   };
 
   return (
@@ -28,19 +34,18 @@ function AddComment({ addNewComment, currentUser }) {
       <textarea
         type="text"
         name="comment"
-        placeholder="Add a comment..."
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={reply}
+        onChange={(e) => setReply(e.target.value)}
       />
       <div className="footer">
         <img
           src="../src/assets/avatars/image-juliusomo.png"
           alt="avatar image"
         />
-        <button onClick={onSubmit}>Send</button>
+        <button onClick={onSubmit}>Reply</button>
       </div>
     </div>
   );
 }
 
-export default AddComment;
+export default AddReply;
