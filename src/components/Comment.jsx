@@ -32,6 +32,7 @@ function Comment({
           <div className="comment-header">
             <img src={user.image} alt="avatar image" className="img-avatar" />
             <h5 className="name">{user.username}</h5>
+            {isCurrentUser && <div className="you">you</div>}
             <div className="date">{createdAt}</div>
           </div>
 
@@ -110,9 +111,10 @@ function Comment({
         <AddReply
           addNewReply={addNewReply}
           currentUser={currentUser}
-          parentId={comment.id}
+          parent={comment}
           showReply={showReply}
           setShowReply={setShowReply}
+          parentUser={comment.user}
         />
       )}
       <div className="replies">{children}</div>

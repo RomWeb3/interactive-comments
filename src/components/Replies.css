@@ -1,9 +1,18 @@
+.reply-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 1.6rem;
+}
+
 .reply {
   background: white;
   padding: 1.6rem;
   border-radius: 8px;
   width: 100%;
-  margin-top: 1.6rem;
+  max-width: 64.2rem;
 }
 
 .comment-header {
@@ -22,17 +31,17 @@
   color: #334253;
 }
 
-.comment-main {
+.reply-main {
   margin: 1.6rem 0;
 }
 
-.comment-footer {
+.reply-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.comment-footer .likes {
+.reply-footer .votes {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,19 +52,30 @@
   padding: 0 1.56rem;
 }
 
-.comment-footer .like-count {
+.reply-footer .like-count {
   color: #5357b6;
   font-weight: 500;
   line-height: 1.9rem;
 }
 
-.comment-footer .reply-btn {
+.reply-footer .reply-button {
   display: flex;
   align-items: center;
   gap: 0.8rem;
 }
 
-.comment-footer .reply-text {
+.reply-footer .reply-button button {
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  color: #5357b6;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+.reply-footer .reply-text {
   font-weight: 500;
   color: #5357b6;
 }
@@ -73,7 +93,7 @@
 }
 
 textarea {
-  height: 15rem;
+  height: 9.6rem;
 }
 
 .edit-btn {
@@ -92,4 +112,55 @@ textarea {
   line-height: 2.4rem;
   font-weight: 500;
   padding: 1.2rem 0;
+}
+
+.reply-footer .reply-button .delete-btn {
+  color: #ed6368;
+}
+
+@media screen and (min-width: 680px) {
+  .reply-container {
+    margin-top: 2rem;
+  }
+
+  .reply {
+    padding: 2.4rem 2.4rem 2.4rem 8.8rem;
+    position: relative;
+    min-height: 14.6rem;
+  }
+
+  .reply-main {
+    margin: 1.5rem 0 0;
+  }
+
+  .reply-footer .votes {
+    position: absolute;
+    top: 2.4rem;
+    left: 2.4rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 4rem;
+    height: 10rem;
+    padding: 1.19rem 0 1.5rem;
+  }
+
+  .reply-button {
+    position: absolute;
+    top: 2.8rem;
+    right: 2.4rem;
+  }
+
+  .reply-footer .reply-button {
+    gap: 2rem;
+  }
+
+  .reply-footer .reply-button button:hover,
+  .reply-footer .reply-button button:hover img {
+    opacity: 0.7;
+  }
+
+  .update-btn:hover {
+    opacity: 0.7;
+  }
 }

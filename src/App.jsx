@@ -147,6 +147,8 @@ function App() {
                 currentUser={data.currentUser}
                 onModal={() => handleShowModal(reply.id)}
                 editComment={editComment}
+                addNewReply={handleNewReply}
+                parent={comment}
               />
             ))}
           </div>

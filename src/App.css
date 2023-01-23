@@ -36,7 +36,6 @@ body {
   line-height: 2.4rem;
   font-weight: 400;
   background: #f2f2f2;
-  height: 100vh;
   color: #67727e;
 }
 
@@ -46,4 +45,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+}
+
+.replies {
+  width: 100%;
 }

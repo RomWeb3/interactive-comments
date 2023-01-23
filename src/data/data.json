@@ -1,6 +1,6 @@
 {
   "currentUser": {
-    "image": "./assets/avatars/image-juliusomo.png",
+    "image": "../src/assets/avatars/image-juliusomo.png",
     "username": "juliusomo"
   },
   "comments": [

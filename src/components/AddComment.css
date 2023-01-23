@@ -1,9 +1,10 @@
 .add-comment {
   width: 100%;
-  margin-top: 1.6rem;
+  max-width: 73rem;
   padding: 1.6rem;
   background: white;
   border-radius: 8px;
+  margin-top: 1.6rem;
 }
 
 textarea {
@@ -46,4 +47,33 @@ textarea::placeholder {
   line-height: 2.4rem;
   font-weight: 500;
   padding: 1.2rem 0;
+}
+
+@media screen and (min-width: 680px) {
+  .add-comment {
+    margin-top: 2rem;
+    padding: 2.4rem 14.4rem 1.8rem 8rem;
+    position: relative;
+  }
+
+  .footer {
+    margin-top: 0;
+  }
+
+  .footer img {
+    position: absolute;
+    top: 2.8rem;
+    left: 2.4rem;
+    width: 4rem;
+  }
+
+  .footer button {
+    position: absolute;
+    top: 2.4rem;
+    right: 2.4rem;
+  }
+
+  .footer button:hover {
+    opacity: 0.7;
+  }
 }

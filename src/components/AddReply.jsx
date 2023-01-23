@@ -3,29 +3,31 @@ import { useState } from "react";
 function AddReply({
   addNewReply,
   currentUser,
-  parentId,
+  parent,
   showReply,
   setShowReply,
+  parentUser,
 }) {
-  const [reply, setReply] = useState("@username,");
+  const [reply, setReply] = useState(`@${parentUser.username}, `);
 
   const onSubmit = () => {
     const currentDate = new Date();
     const timeAgo = new Intl.RelativeTimeFormat("en", { style: "narrow" });
     const time = -Math.round((currentDate - new Date()) / 1000 / 60 / 60 / 24);
+    let newContentReply = reply.replace(`@${parentUser.username},`, "");
     const newReply = {
       id: Date.now(),
-      content: reply,
+      content: newContentReply,
       createdAt: timeAgo.format(time, "days"),
       score: 0,
-      replyingTo: currentUser.username,
+      replyingTo: parentUser.username,
       user: {
         image: currentUser.image,
         username: currentUser.username,
       },
     };
     setReply("@username,");
-    addNewReply(newReply, parentId);
+    addNewReply(newReply, parent.id);
     setShowReply(!showReply);
   };
 
